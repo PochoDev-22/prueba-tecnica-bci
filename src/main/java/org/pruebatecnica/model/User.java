@@ -29,6 +29,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phones;
 
+    private String token;
+    private Boolean isActive;
+
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

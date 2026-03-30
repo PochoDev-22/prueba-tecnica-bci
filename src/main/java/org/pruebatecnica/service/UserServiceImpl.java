@@ -9,7 +9,9 @@ import org.pruebatecnica.model.User;
 import org.pruebatecnica.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Service
@@ -39,6 +41,9 @@ public class UserServiceImpl implements UserService{
                 .name(request.getName())
                 .mail(request.getEmail())
                 .password(request.getPassword())
+                .token(UUID.randomUUID().toString())
+                .isActive(true)
+                .lastLogin(LocalDateTime.now())
                 .build();
 
         List<Phone> phones = request.getPhones().stream().map(p -> {
@@ -60,9 +65,9 @@ public class UserServiceImpl implements UserService{
                 .uuid(saved.getId())
                 .created(saved.getCreatedAt())
                 .modified(saved.getUpdatedAt())
-                .lastLogin(saved.getUpdatedAt())
-                .token("test")
-                .isActive(true)
+                .lastLogin(saved.getLastLogin())
+                .token(saved.getToken())
+                .isActive(saved.getIsActive())
                 .build();
     }
 }
