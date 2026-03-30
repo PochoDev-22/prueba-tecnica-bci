@@ -16,17 +16,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody UserRequestDTO requestDTO) {
-        try {
-            UserResponseDTO createdUser = userService.save(requestDTO);
-            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-
+    public ResponseEntity<UserResponseDTO> save(@Valid @RequestBody UserRequestDTO requestDTO) throws Exception {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(userService.save(requestDTO));
     }
 
 }
