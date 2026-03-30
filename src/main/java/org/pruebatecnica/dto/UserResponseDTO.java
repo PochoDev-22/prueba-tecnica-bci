@@ -1,11 +1,13 @@
 package org.pruebatecnica.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Builder
 public class UserResponseDTO {
     private UUID uuid;
     private LocalDateTime created;

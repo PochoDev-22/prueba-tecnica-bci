@@ -1,7 +1,10 @@
 package org.pruebatecnica.dto;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class UserRequestDTO {
     private String name;
     private String email;
