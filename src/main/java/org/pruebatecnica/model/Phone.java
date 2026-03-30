@@ -19,4 +19,8 @@ public class Phone {
     private String number;
     private String cityCode;
     private String countryCode;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
