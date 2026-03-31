@@ -18,10 +18,12 @@ public class GlobalExceptionHandler {
 
         String path = request.getRequestURI();
 
-        // 🔥 DEJA PASAR SWAGGER
-        if (path.contains("/v3/api-docs") ||
+        // DEJA PASAR SWAGGER
+        if (
+                path.contains("/v3/api-docs") ||
                 path.contains("/swagger") ||
-                path.contains("/swagger-ui")) {
+                path.contains("/swagger-ui")
+        ) {
             throw new RuntimeException(ex);
         }
 
