@@ -8,6 +8,14 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * JWT Util
+ *
+ * <p>Utilidad para la generación de tokens JWT. </p>
+ *
+ * @author Rodolfo Crisanto
+ * @version 1.0
+ */
 @Component
 public class JWTUtil {
 
@@ -20,6 +28,13 @@ public class JWTUtil {
     @Value("${security.jwt.expired}")
     private String expired;
 
+    /**
+     * Genera un token JWT para un usuario.
+     *
+     * @param username mail del usuario
+     * @param role rol del usuario
+     * @return token JWT firmado
+     */
     public String createToken(String username, String role) {
         Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
         return JWT.create()

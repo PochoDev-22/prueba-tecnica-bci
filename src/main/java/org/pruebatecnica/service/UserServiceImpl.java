@@ -18,6 +18,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+/**
+ * User Service Implement.
+ *
+ * <p>Servicio encargado de la lógica de negocio de usuarios. </p>
+ *
+ * @author Rodolfo Crisanto
+ * @version 1.0
+ */
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
@@ -27,6 +35,13 @@ public class UserServiceImpl implements UserService{
     private final UserMapper userMapper;
     private final JWTUtil jwtUtil;
 
+    /**
+     * Registra un nuevo usuario validando reglas de negocio
+     *
+     * @param request
+     * @return {@link UserResponseDTO}
+     * @throws Exception
+     */
     @Override
     public UserResponseDTO save(UserRequestDTO request) throws Exception{
 
@@ -61,12 +76,25 @@ public class UserServiceImpl implements UserService{
         return userMapper.toResponse(saved);
     }
 
+    /**
+     * Retorna una lista de usuarios registrados
+     *
+     * @return list {@link UserResponseDTO}
+     */
     @Override
     public List<UserResponseDTO> getAll() {
         List<User> users = userRepository.findAll();
         return users.stream().map(userMapper::toResponse).toList();
     }
 
+
+    /**
+     * Registra el login del usuario usando el atributo last login
+     *
+     * @param requestDTO
+     * @return {@link LoginResponseDTO}
+     * @throws Exception
+     */
     @Override
     public LoginResponseDTO login(LoginRequestDTO requestDTO) throws Exception{
         boolean exists = userRepository.existsByMailAndPassword(requestDTO.getMail(), requestDTO.getPassword());
