@@ -58,4 +58,10 @@ public class UserServiceImpl implements UserService{
 
         return userMapper.toResponse(saved);
     }
+
+    @Override
+    public List<UserResponseDTO> getAll() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(userMapper::toResponse).toList();
+    }
 }
