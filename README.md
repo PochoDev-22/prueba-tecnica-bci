@@ -45,6 +45,10 @@ La aplicación se ejecutará por defecto en:
 
 `http://localhost:8080`
 
+## Documentación de de la Api
+Swagger UI disponible en:
+``http://localhost:8080/swagger-ui/index.html``. Desde alli es posible revizar los endpoints de manera más interactiva.
+
 ## Endpoint principal
 ### Crear usuario
 POST `/api/users`
@@ -89,7 +93,14 @@ Para su ejecucion
 
 ``./gradlew test``
 
+## Colección de Postman
+Se incluye una colección de Postman para facilitar las pruebas del proyecto.
+
+Ubicación: ``postman/Prueba Tecnica BCI.postman_collection.json``
+
+
 ## Consideraciones
 - El token JWT es generado y almacenado junto al usuario, según lo solicitado en la prueba.
 - La base de datos es en memoria, por lo que la información se pierde al reiniciar la aplicación.
 - La validación de contraseña es configurable desde el archivo de propiedades.
+- Se adjunta coleccion de POSTMAN para las pruebas
