@@ -66,5 +66,22 @@ public class UserServiceImplTest {
         assertNotNull(response);
     }
 
+    @Test
+    void shouldFailWhenEmailAlreadyExists() {
+
+        UserRequestDTO request = new UserRequestDTO();
+        request.setEmail("marcelo@bci.cl");
+        request.setPassword("hunter2A");
+
+        when(userRepository.existsByMail(request.getEmail())).thenReturn(true);
+        when(validationConfig.getPasswordRegex()).thenReturn(".*");
+
+        Exception ex = assertThrows(Exception.class, () -> {
+            userService.save(request);
+        });
+
+        assertEquals("El correo ya esta registrado en la base de datos.", ex.getMessage());
+    }
+
 
 }
