@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
         String path = request.getRequestURI();
 
-        // DEJA PASAR SWAGGER
+        // Para que los endpoints del swagger se muestren y no hagan conflicto
         if (
                 path.contains("/v3/api-docs") ||
                 path.contains("/swagger") ||
