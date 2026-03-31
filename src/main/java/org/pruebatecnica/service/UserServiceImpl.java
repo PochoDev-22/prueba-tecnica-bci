@@ -2,6 +2,8 @@ package org.pruebatecnica.service;
 
 import lombok.RequiredArgsConstructor;
 import org.pruebatecnica.config.ValidationConfig;
+import org.pruebatecnica.dto.LoginRequestDTO;
+import org.pruebatecnica.dto.LoginResponseDTO;
 import org.pruebatecnica.dto.UserRequestDTO;
 import org.pruebatecnica.dto.UserResponseDTO;
 import org.pruebatecnica.mapper.UserMapper;
@@ -63,5 +65,21 @@ public class UserServiceImpl implements UserService{
     public List<UserResponseDTO> getAll() {
         List<User> users = userRepository.findAll();
         return users.stream().map(userMapper::toResponse).toList();
+    }
+
+    @Override
+    public LoginResponseDTO login(LoginRequestDTO requestDTO) throws Exception{
+        boolean exists = userRepository.existsByMailAndPassword(requestDTO.getMail(), requestDTO.getPassword());
+        if(!exists) {
+            throw new Exception("Credenciales incorrectas");
+        }
+
+        User user = userRepository.findByMailAndPassword(requestDTO.getMail(), requestDTO.getPassword());
+        user.setLastLogin(LocalDateTime.now());
+        userRepository.save(user);
+
+        return LoginResponseDTO.builder()
+                .message("Login correcto, last login actualizado")
+                .build();
     }
 }
