@@ -1,9 +1,6 @@
 package org.pruebatecnica.service;
 
-import org.pruebatecnica.dto.LoginRequestDTO;
-import org.pruebatecnica.dto.LoginResponseDTO;
-import org.pruebatecnica.dto.UserRequestDTO;
-import org.pruebatecnica.dto.UserResponseDTO;
+import org.pruebatecnica.dto.*;
 
 import java.util.List;
 
@@ -17,6 +14,6 @@ import java.util.List;
  */
 public interface UserService {
     UserResponseDTO save(UserRequestDTO request) throws Exception;
-    List<UserResponseDTO> getAll();
+    List<UserSimpleResponseDTO> getAll();
     LoginResponseDTO login(LoginRequestDTO requestDTO) throws Exception;
 }

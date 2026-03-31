@@ -2,10 +2,7 @@ package org.pruebatecnica.service;
 
 import lombok.RequiredArgsConstructor;
 import org.pruebatecnica.config.ValidationConfig;
-import org.pruebatecnica.dto.LoginRequestDTO;
-import org.pruebatecnica.dto.LoginResponseDTO;
-import org.pruebatecnica.dto.UserRequestDTO;
-import org.pruebatecnica.dto.UserResponseDTO;
+import org.pruebatecnica.dto.*;
 import org.pruebatecnica.mapper.UserMapper;
 import org.pruebatecnica.model.Phone;
 import org.pruebatecnica.model.User;
@@ -79,12 +76,12 @@ public class UserServiceImpl implements UserService{
     /**
      * Retorna una lista de usuarios registrados
      *
-     * @return list {@link UserResponseDTO}
+     * @return list {@link UserSimpleResponseDTO}
      */
     @Override
-    public List<UserResponseDTO> getAll() {
+    public List<UserSimpleResponseDTO> getAll() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(userMapper::toResponse).toList();
+        return users.stream().map(userMapper::toSimpleResponse).toList();
     }
 
 

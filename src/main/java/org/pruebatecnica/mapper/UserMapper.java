@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.pruebatecnica.dto.PhoneRequestDTO;
 import org.pruebatecnica.dto.UserRequestDTO;
 import org.pruebatecnica.dto.UserResponseDTO;
+import org.pruebatecnica.dto.UserSimpleResponseDTO;
 import org.pruebatecnica.model.Phone;
 import org.pruebatecnica.model.User;
 
@@ -18,6 +19,14 @@ public interface UserMapper {
     @Mapping(target = "token", source = "token")
     @Mapping(target = "isActive", source = "isActive")
     UserResponseDTO toResponse(User user);
+
+    @Mapping(target = "uuid", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "created", source = "createdAt")
+    @Mapping(target = "modified", source = "updatedAt")
+    @Mapping(target = "lastLogin", source = "lastLogin")
+    @Mapping(target = "isActive", source = "isActive")
+    UserSimpleResponseDTO toSimpleResponse(User user);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
