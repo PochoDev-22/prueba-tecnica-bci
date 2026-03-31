@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.pruebatecnica.config.ValidationConfig;
 import org.pruebatecnica.dto.UserRequestDTO;
 import org.pruebatecnica.dto.UserResponseDTO;
+import org.pruebatecnica.mapper.UserMapper;
 import org.pruebatecnica.model.Phone;
 import org.pruebatecnica.model.User;
 import org.pruebatecnica.repository.UserRepository;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final ValidationConfig validationConfig;
+    private final UserMapper userMapper;
 
     @Override
     public UserResponseDTO save(UserRequestDTO request) throws Exception{
@@ -37,37 +39,21 @@ public class UserServiceImpl implements UserService{
             throw new Exception("El correo ya esta registrado en la base de datos.");
         }
 
-        User newUser = User.builder()
-                .name(request.getName())
-                .mail(request.getEmail())
-                .password(request.getPassword())
-                .token(UUID.randomUUID().toString())
-                .isActive(true)
-                .lastLogin(LocalDateTime.now())
-                .build();
+        User newUser = userMapper.toRequestUser(request);
 
         List<Phone> phones = request.getPhones().stream().map(p -> {
-            Phone phone = Phone.builder()
-                    .number(p.getNumber())
-                    .countryCode(p.getCountryCode())
-                    .cityCode(p.getCityCode())
-                    .build();
-
+            Phone phone = userMapper.toRequestPhone(p);
             phone.setUser(newUser);
             return phone;
         }).toList();
 
         newUser.setPhones(phones);
+        newUser.setToken(UUID.randomUUID().toString());
+        newUser.setLastLogin(LocalDateTime.now());
+        newUser.setIsActive(true);
 
         User saved = userRepository.save(newUser);
 
-        return UserResponseDTO.builder()
-                .uuid(saved.getId())
-                .created(saved.getCreatedAt())
-                .modified(saved.getUpdatedAt())
-                .lastLogin(saved.getLastLogin())
-                .token(saved.getToken())
-                .isActive(saved.getIsActive())
-                .build();
+        return userMapper.toResponse(saved);
     }
 }
