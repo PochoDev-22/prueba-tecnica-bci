@@ -29,6 +29,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phones;
 
+    @Column(columnDefinition = "TEXT")
     private String token;
     private Boolean isActive;
 

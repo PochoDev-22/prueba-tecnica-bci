@@ -8,6 +8,7 @@ import org.pruebatecnica.mapper.UserMapper;
 import org.pruebatecnica.model.Phone;
 import org.pruebatecnica.model.User;
 import org.pruebatecnica.repository.UserRepository;
+import org.pruebatecnica.util.JWTUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final ValidationConfig validationConfig;
     private final UserMapper userMapper;
+    private final JWTUtil jwtUtil;
 
     @Override
     public UserResponseDTO save(UserRequestDTO request) throws Exception{
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService{
         }).toList();
 
         newUser.setPhones(phones);
-        newUser.setToken(UUID.randomUUID().toString());
+        newUser.setToken(jwtUtil.createToken(request.getEmail(), "ADMIN"));
         newUser.setLastLogin(LocalDateTime.now());
         newUser.setIsActive(true);
 
