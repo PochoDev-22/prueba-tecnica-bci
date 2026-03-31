@@ -83,5 +83,19 @@ public class UserServiceImplTest {
         assertEquals("El correo ya esta registrado en la base de datos.", ex.getMessage());
     }
 
+    @Test
+    void shouldFailWhenPasswordInvalid() {
+        UserRequestDTO request = new UserRequestDTO();
+        request.setEmail("test@test.cl");
+        request.setPassword("123");
+
+        when(validationConfig.getPasswordRegex()).thenReturn("^(?=.*[A-Z]).*$");
+
+        Exception ex = assertThrows(Exception.class, () -> {
+            userService.save(request);
+        });
+
+        assertEquals("La contraseña no cumple el formato requerido", ex.getMessage());
+    }
 
 }
